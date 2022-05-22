@@ -1,0 +1,5 @@
+DROP TABLE record;
+DROP TABLE date_place_record;
+DROP TABLE sensor;
+DROP TABLE place;
+DROP TABLE date_record;
