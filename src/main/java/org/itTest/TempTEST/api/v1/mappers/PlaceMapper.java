@@ -12,6 +12,8 @@ import org.mapstruct.factory.Mappers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+@Mapper
 public interface PlaceMapper {
 
     PlaceMapper INSTANCE = Mappers.getMapper(PlaceMapper.class);

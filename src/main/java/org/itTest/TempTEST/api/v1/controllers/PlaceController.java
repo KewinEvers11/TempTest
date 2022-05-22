@@ -2,8 +2,8 @@ package org.itTest.TempTEST.api.v1.controllers;
 
 import org.itTest.TempTEST.api.v1.dto.request.PlaceRequest;
 import org.itTest.TempTEST.api.v1.dto.request.SensorRequest;
+import org.itTest.TempTEST.api.v1.dto.response.PlaceItem;
 import org.itTest.TempTEST.api.v1.dto.response.PlaceResponse;
-import org.itTest.TempTEST.api.v1.dto.response.SensorResponse;
 import org.itTest.TempTEST.api.v1.service.PlaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +28,7 @@ public class PlaceController {
 
     @GetMapping({"", "/"})
     @ResponseStatus(HttpStatus.OK)
-    public List<PlaceResponse> getAllPlaces(){
+    public List<PlaceItem> getAllPlaces(){
         return placeService.findAllPlaces();
     }
 

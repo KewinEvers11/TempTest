@@ -2,8 +2,8 @@ package org.itTest.TempTEST.api.v1.service;
 
 import org.itTest.TempTEST.api.v1.dto.request.PlaceRequest;
 import org.itTest.TempTEST.api.v1.dto.request.SensorRequest;
+import org.itTest.TempTEST.api.v1.dto.response.PlaceItem;
 import org.itTest.TempTEST.api.v1.dto.response.PlaceResponse;
-import org.itTest.TempTEST.api.v1.dto.response.SensorResponse;
 import org.itTest.TempTEST.api.v1.mappers.PlaceMapper;
 import org.itTest.TempTEST.api.v1.mappers.SensorMapper;
 import org.itTest.TempTEST.exceptions.NotFoundException;
@@ -39,10 +39,11 @@ public class PlaceServiceImpl implements PlaceService{
     }
 
     @Override
-    public List<PlaceResponse> findAllPlaces(){
+    public List<PlaceItem> findAllPlaces(){
         return placeRepository.findAll()
                 .stream()
-                .map(place -> placeMapper.placeToPlaceResponse(place))
+                .map(place -> placeMapper.placeToPlaceItem(place))
+                .peek(p -> p.set_links(urlUtils.getLinksForPlaceItem(p)))
                 .collect(Collectors.toList());
     }
 

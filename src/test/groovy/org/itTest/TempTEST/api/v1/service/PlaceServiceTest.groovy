@@ -2,8 +2,8 @@ package org.itTest.TempTEST.api.v1.service
 
 import org.itTest.TempTEST.api.v1.dto.request.PlaceRequest
 import org.itTest.TempTEST.api.v1.dto.request.SensorRequest
+import org.itTest.TempTEST.api.v1.dto.response.PlaceItem
 import org.itTest.TempTEST.api.v1.dto.response.PlaceResponse
-import org.itTest.TempTEST.api.v1.dto.response.SensorResponse
 import org.itTest.TempTEST.exceptions.NotFoundException
 import org.itTest.TempTEST.models.Place
 import org.itTest.TempTEST.models.Sensor
@@ -51,12 +51,12 @@ class PlaceServiceTest extends Specification {
         p2.uuid = "p2"
         List<Place> places = List.of(p1, p2);
         when: "find all places is called"
-        List<PlaceResponse> responses = placeService.findAllPlaces();
+        List<PlaceItem> responses = placeService.findAllPlaces()
         then: "checking responses"
         responses.get(0).uuid == "p1"
         responses.get(1).uuid == "p2"
         and: "Specifying mock behaviour"
-        1 * placeRepository.findAll() >> places;
+        1 * placeRepository.findAll() >> places
     }
 
     def "Should find a place by using a Id" () {
