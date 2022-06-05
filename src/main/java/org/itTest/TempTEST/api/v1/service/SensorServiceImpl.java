@@ -11,11 +11,11 @@ import org.itTest.TempTEST.models.Sensor;
 import org.itTest.TempTEST.repositories.PlaceRepository;
 import org.itTest.TempTEST.repositories.SensorRepository;
 import org.itTest.TempTEST.utils.UrlUtils;
+import org.springframework.stereotype.Service;
 
 import static org.itTest.TempTEST.exceptions.ExceptionMessages.CODE_4004;
 import static org.itTest.TempTEST.exceptions.ExceptionMessages.CODE_4050;
-import static org.itTest.TempTEST.exceptions.ExceptionMessages.CODE_4051;
-
+@Service
 public class SensorServiceImpl implements SensorService {
 
     private final SensorRepository sensorRepository;
