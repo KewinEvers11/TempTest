@@ -1,7 +1,5 @@
 package org.itTest.TempTEST.exceptions;
 
-import org.itTest.TempTEST.api.v1.dto.request.SensorRequest;
-
 public class SensorIsNotRegistered extends RuntimeException{
 
     private final String uuid;

@@ -2,7 +2,6 @@ package org.itTest.TempTEST.api.v1.mappers
 
 import org.itTest.TempTEST.api.v1.dto.request.SensorRequest
 import org.itTest.TempTEST.api.v1.dto.response.SensorResponse
-import org.itTest.TempTEST.models.Place
 import org.itTest.TempTEST.models.Sensor
 import org.mapstruct.factory.Mappers
 import spock.lang.Specification

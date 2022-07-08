@@ -1,1 +1,3 @@
 rootProject.name = 'TempTEST'
+include 'ApiRest'
+
