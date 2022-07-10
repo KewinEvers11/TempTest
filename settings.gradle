@@ -1,3 +1,4 @@
 rootProject.name = 'TempTEST'
 include 'ApiRest'
+include 'api-rest-producer'
 
