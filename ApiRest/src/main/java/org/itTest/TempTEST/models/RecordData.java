@@ -5,11 +5,14 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @Table(name = "record_data")
+@Entity
 public class RecordData {
 
     @Id
@@ -21,4 +24,8 @@ public class RecordData {
 
     @Column(name = "date")
     private LocalDate date;
+
+    @ManyToOne
+    private Sensor sensor;
+
 }
