@@ -1,5 +1,6 @@
 package org.itTest.TempTEST.api.v1.mappers;
 
+import org.itTest.TempTEST.api.v1.dto.request.RecordDataItemRequest;
 import org.itTest.TempTEST.api.v1.dto.request.RecordDataRequest;
 import org.itTest.TempTEST.api.v1.dto.response.RecordDataResponse;
 import org.itTest.TempTEST.models.RecordData;
@@ -16,4 +17,7 @@ public interface RecordDataMapper {
 
     @Mapping(source = "temp", target = "temperature")
     RecordData recordDataRequestToRecordData(RecordDataRequest request);
+
+    RecordData recordDataItemRequestToRecordData(RecordDataItemRequest recordItem);
+
 }

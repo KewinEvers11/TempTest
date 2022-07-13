@@ -1,5 +1,6 @@
 package org.itTest.TempTEST.api.v1.mappers
 
+import org.itTest.TempTEST.api.v1.dto.request.RecordDataItemRequest
 import org.itTest.TempTEST.api.v1.dto.request.RecordDataRequest
 import org.itTest.TempTEST.api.v1.dto.response.RecordDataResponse
 import org.itTest.TempTEST.models.RecordData
@@ -51,5 +52,21 @@ class RecordDataMapperTest extends Specification {
         then: "Asserting record data"
         recordData.temperature == 34.5D
     }
+
+    def "Test map RecordDataRequestItem to RecordData"() {
+        given: "RecordDataRequest item populated"
+
+        RecordDataItemRequest request = new RecordDataItemRequest()
+        request.temperature = 43.4D
+        request.timestamp = TIMESTAMP
+
+        when: "RecordDataRequestItem is mapped to RecordData"
+        RecordData recordData = mapper.recordDataItemRequestToRecordData(request)
+
+        then: "asserting field for record data"
+        recordData.timestamp == TIMESTAMP
+        recordData.temperature == 43.4D
+    }
+
 
 }
