@@ -3,12 +3,8 @@ package org.itTest.TempTEST.models;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "sensor")
@@ -25,4 +21,8 @@ public class Sensor {
 
     @ManyToOne
     private Place place;
+
+    @OneToMany(mappedBy = "sensor")
+    private List<RecordData> records;
+
 }

@@ -1,0 +1,1 @@
+SELECT AVG(temperature), date FROM public.record_data where sensor_uuid = '436c206f-434b-43bd-9c8c-ee4765304390' GROUP BY date;
