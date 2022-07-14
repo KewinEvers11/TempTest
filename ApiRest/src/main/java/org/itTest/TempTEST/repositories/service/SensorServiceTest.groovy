@@ -1,7 +1,9 @@
-package org.itTest.TempTEST.api.v1.service
+package org.itTest.TempTEST.repositories.service
 
 import org.itTest.TempTEST.api.v1.dto.request.SensorRequest
 import org.itTest.TempTEST.api.v1.dto.response.SensorResponse
+import org.itTest.TempTEST.api.v1.service.SensorService
+import org.itTest.TempTEST.api.v1.service.SensorServiceImpl
 import org.itTest.TempTEST.exceptions.PlaceNotRegistered
 import org.itTest.TempTEST.exceptions.SensorIsNotRegistered
 import org.itTest.TempTEST.models.Place
