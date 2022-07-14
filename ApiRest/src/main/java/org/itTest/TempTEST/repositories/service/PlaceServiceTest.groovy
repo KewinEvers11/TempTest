@@ -1,9 +1,11 @@
-package org.itTest.TempTEST.api.v1.service
+package org.itTest.TempTEST.repositories.service
 
 import org.itTest.TempTEST.api.v1.dto.request.PlaceRequest
 import org.itTest.TempTEST.api.v1.dto.request.SensorRequest
 import org.itTest.TempTEST.api.v1.dto.response.PlaceItem
 import org.itTest.TempTEST.api.v1.dto.response.PlaceResponse
+import org.itTest.TempTEST.api.v1.service.PlaceService
+import org.itTest.TempTEST.api.v1.service.PlaceServiceImpl
 import org.itTest.TempTEST.exceptions.NotFoundException
 import org.itTest.TempTEST.models.Place
 import org.itTest.TempTEST.models.Sensor
