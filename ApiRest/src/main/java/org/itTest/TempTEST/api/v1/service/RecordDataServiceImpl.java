@@ -44,7 +44,7 @@ public class RecordDataServiceImpl implements RecordDataService{
                 .stream()
                 .map(r -> recordDataMapper.recordDataItemRequestToRecordData(r))
                 .peek(rd -> rd.setDate(request.getDate()))
-                .peek(rd -> rd.setSensor(sensor))
+                .peek(rd -> rd.getRecordDataKey().setSensor(sensor))
                 .collect(Collectors.toList());
 
 

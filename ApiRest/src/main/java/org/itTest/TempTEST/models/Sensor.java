@@ -19,10 +19,10 @@ public class Sensor {
     @Column(name = "name", nullable = false )
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Place place;
 
-    @OneToMany(mappedBy = "sensor")
+    @OneToMany(mappedBy = "recordDataKey.sensor", cascade = CascadeType.ALL)
     private List<RecordData> records;
 
 }
