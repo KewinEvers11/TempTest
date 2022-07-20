@@ -10,5 +10,5 @@ SELECT s.name, AVG(r.temperature)
 	FROM public.record_data  r
 		INNER JOIN public.sensor s
 		ON r.sensor_uuid = s.uuid
-		WHERE s.place_uuid = 'a71363a6-5134-43ff-9958-21699b99cc75' AND r.date = '2022-07-15'
-		GROUP BY s.name;
+		WHERE s.place_uuid = 'c5888a64-1a6b-4678-91c5-5f23e43c3b8e' AND r.date = '2022-07-15'
+		GROUP BY s.place_uuid;
