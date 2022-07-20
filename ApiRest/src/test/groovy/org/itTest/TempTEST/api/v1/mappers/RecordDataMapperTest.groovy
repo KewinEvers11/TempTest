@@ -4,6 +4,7 @@ import org.itTest.TempTEST.api.v1.dto.request.RecordDataItemRequest
 import org.itTest.TempTEST.api.v1.dto.request.RecordDataRequest
 import org.itTest.TempTEST.api.v1.dto.response.RecordDataResponse
 import org.itTest.TempTEST.models.RecordData
+import org.itTest.TempTEST.models.RecordDataCompositeKey
 import spock.lang.Specification
 
 import java.time.LocalDate
@@ -29,7 +30,8 @@ class RecordDataMapperTest extends Specification {
         RecordData recordData = new RecordData()
         recordData.temperature = 32.4D
         recordData.date = DATE
-        recordData.timestamp = TIMESTAMP
+        recordData.recordDataKey = new RecordDataCompositeKey()
+        recordData.recordDataKey.timestamp = TIMESTAMP
 
         when: "RecordDate is mapped"
         RecordDataResponse response = mapper.recordDataToRecordDataResponse(recordData)
@@ -64,7 +66,7 @@ class RecordDataMapperTest extends Specification {
         RecordData recordData = mapper.recordDataItemRequestToRecordData(request)
 
         then: "asserting field for record data"
-        recordData.timestamp == TIMESTAMP
+        recordData.recordDataKey.timestamp == TIMESTAMP
         recordData.temperature == 43.4D
     }
 

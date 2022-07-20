@@ -13,6 +13,7 @@ public interface RecordDataMapper {
 
     RecordDataMapper INSTANCE = Mappers.getMapper(RecordDataMapper.class);
 
+    @Mapping(source = "recordDataKey.timestamp", target = "timestamp")
     RecordDataResponse recordDataToRecordDataResponse(RecordData recordData);
 
     @Mapping(source = "temp", target = "temperature")
