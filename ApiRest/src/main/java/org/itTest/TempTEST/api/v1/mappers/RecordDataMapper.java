@@ -18,6 +18,7 @@ public interface RecordDataMapper {
     @Mapping(source = "temp", target = "temperature")
     RecordData recordDataRequestToRecordData(RecordDataRequest request);
 
+    @Mapping(source = "timestamp", target = "recordDataKey.timestamp")
     RecordData recordDataItemRequestToRecordData(RecordDataItemRequest recordItem);
 
 }

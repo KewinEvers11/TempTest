@@ -1,1 +1,14 @@
 SELECT AVG(temperature), date FROM public.record_data where sensor_uuid = '436c206f-434b-43bd-9c8c-ee4765304390' GROUP BY date;
+
+SELECT * FROM public.place;
+
+SELECT * FROM public.record_data WHERE sensor_uuid = '436c206f-434b-43bd-9c8c-ee4765304390' AND date = '2022-07-12' ORDER BY timestamp;
+
+
+-- average temperature for each sensor in a place
+SELECT s.name, AVG(r.temperature) 
+	FROM public.record_data  r
+		INNER JOIN public.sensor s
+		ON r.sensor_uuid = s.uuid
+		WHERE s.place_uuid = 'a71363a6-5134-43ff-9958-21699b99cc75' AND r.date = '2022-07-15'
+		GROUP BY s.name;
