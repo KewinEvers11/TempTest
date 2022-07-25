@@ -1,4 +1,4 @@
-package org.itTest.TempTEST.repositories.service
+package org.itTest.TempTEST.api.v1.services
 
 import org.itTest.TempTEST.api.v1.dto.request.SensorRequest
 import org.itTest.TempTEST.api.v1.dto.response.SensorResponse
