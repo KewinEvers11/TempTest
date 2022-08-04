@@ -2,6 +2,8 @@ package org.itTest.TempTEST.api.v1.service;
 
 import org.itTest.TempTEST.api.v1.dto.request.PlaceRequest;
 import org.itTest.TempTEST.api.v1.dto.request.SensorRequest;
+import org.itTest.TempTEST.api.v1.dto.response.AverageTemperaturePerSensorByDateContainerResponse;
+import org.itTest.TempTEST.api.v1.dto.response.AverageTemperaturePerSensorDTO;
 import org.itTest.TempTEST.api.v1.dto.response.PlaceItem;
 import org.itTest.TempTEST.api.v1.dto.response.PlaceResponse;
 import org.itTest.TempTEST.api.v1.mappers.PlaceMapper;
@@ -9,11 +11,13 @@ import org.itTest.TempTEST.api.v1.mappers.SensorMapper;
 import org.itTest.TempTEST.exceptions.NotFoundException;
 import org.itTest.TempTEST.models.Place;
 import org.itTest.TempTEST.models.Sensor;
+import org.itTest.TempTEST.pojo.AvgTemperaturePerSensorPojo;
 import org.itTest.TempTEST.repositories.PlaceRepository;
 import org.itTest.TempTEST.utils.UrlUtils;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,6 +90,32 @@ public class PlaceServiceImpl implements PlaceService{
         return placeUpdated;
     }
 
+    @Override
+    @Transactional
+    public AverageTemperaturePerSensorByDateContainerResponse getAverageTemperaturePerSensorByDateAndUuid(String uuid, LocalDate date) {
+        // Checks if place exists
+        Place foundPlace = placeRepository.findById(uuid)
+                .orElseThrow(() -> new NotFoundException(String.format(CODE_4004, "Place", uuid)));
+        // Gets the average temperatures
+        List<AvgTemperaturePerSensorPojo> data = placeRepository.getAvgTemperaturePerSensor(date, uuid);
+
+        List<AverageTemperaturePerSensorDTO> avgTempList = data.stream()
+                .map(avgTemperaturePerSensorPojo -> {
+                    AverageTemperaturePerSensorDTO dto = new AverageTemperaturePerSensorDTO();
+                    dto.setSensorName(avgTemperaturePerSensorPojo.getSensorName());
+                    dto.setSensorUuid(avgTemperaturePerSensorPojo.getSensorUuid());
+                    dto.setAverageTemperature(avgTemperaturePerSensorPojo.getAverageTemperature());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        AverageTemperaturePerSensorByDateContainerResponse response = new AverageTemperaturePerSensorByDateContainerResponse();
+        response.setPlaceName(foundPlace.getName());
+        response.setPlaceUuid(foundPlace.getUuid());
+        response.setAvgTemperatures(avgTempList);
+
+        return response;
+    }
 
     private  void addLinksToSensors(PlaceResponse response) {
         response.getSensors()

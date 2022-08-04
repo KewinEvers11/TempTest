@@ -4,7 +4,7 @@ import org.itTest.TempTEST.models.Place;
 import org.itTest.TempTEST.models.RecordData;
 import org.itTest.TempTEST.models.RecordDataCompositeKey;
 import org.itTest.TempTEST.models.Sensor;
-import org.itTest.TempTEST.pojo.AvgTemperatureBySensorPojo;
+import org.itTest.TempTEST.pojo.AvgTemperaturePerSensorPojo;
 import org.junit.jupiter.api.*;
 
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,15 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -100,7 +96,7 @@ public class PlaceRepository_IT {
         assertNotNull(place1);
         log.info("Place found");
 
-        List<AvgTemperatureBySensorPojo> avg = placeRepository.getAvgTemperaturePerSensor(LocalDate.now(), place.getUuid());
+        List<AvgTemperaturePerSensorPojo> avg = placeRepository.getAvgTemperaturePerSensor(LocalDate.now(), place.getUuid());
 
         log.info("results: " + avg);
 

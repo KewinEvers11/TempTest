@@ -1,7 +1,7 @@
 package org.itTest.TempTEST.repositories;
 
 import org.itTest.TempTEST.models.Place;
-import org.itTest.TempTEST.pojo.AvgTemperatureBySensorPojo;
+import org.itTest.TempTEST.pojo.AvgTemperaturePerSensorPojo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,6 +22,6 @@ public interface PlaceRepository extends JpaRepository<Place, String> {
             "\tON s.uuid = r.sensor_uuid\n" +
             "\tWHERE s.place_uuid = :place_uuid\n" +
             "\tGROUP BY s.uuid, s.name", nativeQuery = true)
-    List<AvgTemperatureBySensorPojo> getAvgTemperaturePerSensor(@Param("date") LocalDate date, @Param("place_uuid") String placeUuid);
+    List<AvgTemperaturePerSensorPojo> getAvgTemperaturePerSensor(@Param("date") LocalDate date, @Param("place_uuid") String placeUuid);
 
 }

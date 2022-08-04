@@ -2,6 +2,7 @@ package org.itTest.TempTEST.api.v1.services
 
 import org.itTest.TempTEST.api.v1.dto.request.PlaceRequest
 import org.itTest.TempTEST.api.v1.dto.request.SensorRequest
+import org.itTest.TempTEST.api.v1.dto.response.AverageTemperaturePerSensorByDateContainerResponse
 import org.itTest.TempTEST.api.v1.dto.response.PlaceItem
 import org.itTest.TempTEST.api.v1.dto.response.PlaceResponse
 import org.itTest.TempTEST.api.v1.service.PlaceService
@@ -9,10 +10,11 @@ import org.itTest.TempTEST.api.v1.service.PlaceServiceImpl
 import org.itTest.TempTEST.exceptions.NotFoundException
 import org.itTest.TempTEST.models.Place
 import org.itTest.TempTEST.models.Sensor
+import org.itTest.TempTEST.pojo.AvgTemperaturePerSensorPojo
 import org.itTest.TempTEST.repositories.PlaceRepository
 import org.itTest.TempTEST.utils.UrlUtils
 import spock.lang.Specification
-
+import java.time.LocalDate
 
 class PlaceServiceTest extends Specification {
 
@@ -156,5 +158,100 @@ class PlaceServiceTest extends Specification {
         1 * placeRepository.findById(_) >> Optional.of(place);
         1 * urlUtils.getLinksForSensorItem(_) >> _links;
         1 * placeRepository.save(_) >> placeUpdated;
+    }
+
+    def "Should request get a success AverageTemperaturePerSensorByDateContainerResponse"() {
+
+        given: "an existent place"
+        Place place = new Place()
+        place.uuid = "uuid"
+        place.name = "basement"
+        place.sensors = new ArrayList()
+
+        and: "list of average temperatures data"
+        def avg1 = new AvgTempImpl("uuid1", "sensor1", 36.7d)
+        def avg2 = new AvgTempImpl("uuid2", "sensor2", 35.5d)
+        List<AvgTemperaturePerSensorPojo> dataList = List.of(avg1, avg2)
+
+        when: "get AverageTemperaturePerSensor for the place"
+        AverageTemperaturePerSensorByDateContainerResponse result = placeService.getAverageTemperaturePerSensorByDateAndUuid("uuid", LocalDate.of(2022, 8, 3))
+
+        then: "Checking results"
+        result.placeName == "basement"
+        result.placeUuid == "uuid"
+        result.avgTemperatures[0].sensorUuid == "uuid1"
+        result.avgTemperatures[0].sensorName == "sensor1"
+        result.avgTemperatures[0].averageTemperature == 36.7d
+        result.avgTemperatures[1].sensorUuid == "uuid2"
+        result.avgTemperatures[1].sensorName == "sensor2"
+        result.avgTemperatures[1].averageTemperature == 35.5d
+
+        and: "Mocking repositories"
+        1 * placeRepository.findById(_) >> Optional.of(place)
+        1 * placeRepository.getAvgTemperaturePerSensor(_, _) >> dataList
+    }
+
+    def "Test getAverageTemperaturePerSensorByDateAndUuid "() {
+        given: "an uuid of a non existent place object"
+        String uuid = "noexist"
+        Place place = null
+
+        when: "get AverageTemperaturePerSensor for not found place"
+        placeService.getAverageTemperaturePerSensorByDateAndUuid(uuid, LocalDate.of(2022, 7, 3))
+
+        then: "Place not found exception thrown"
+        thrown NotFoundException
+        and: "Mocking placeRepository response"
+        1 * placeRepository.findById(_) >> Optional.ofNullable(place)
+    }
+
+    def "Test getAverageTemperaturePerSensorByDateAndUuid but not record was found" () {
+        given: "an existent place"
+        Place place = new Place()
+        place.name = "basement"
+        place.uuid = "uuid"
+        place.sensors = new ArrayList<>()
+
+        when: "get AverageTemperaturePerSensor for place with no records"
+        AverageTemperaturePerSensorByDateContainerResponse result = placeService.getAverageTemperaturePerSensorByDateAndUuid("uuid", LocalDate.of(2022, 7,3))
+
+        then: "resultant query with no records"
+        result.placeName == "basement"
+        result.placeUuid == "uuid"
+        result.avgTemperatures == []
+
+        and: "mocking repository responses"
+        1 * placeRepository.findById(_) >> Optional.of(place)
+        1 * placeRepository.getAvgTemperaturePerSensor(_,_) >> new ArrayList<>()
+    }
+}
+/**
+ * Implementation in other to not mock a list of AverageTemperatureBySensorPojo
+ */
+class AvgTempImpl implements AvgTemperaturePerSensorPojo {
+
+    private String sensorUuid
+    private String sensorName
+    private Double averageTemperature
+
+    public AvgTempImpl(String sensorUuid, String sensorName, Double averageTemperature) {
+        this.sensorUuid = sensorUuid
+        this.sensorName = sensorName
+        this.averageTemperature = averageTemperature
+    }
+
+    @Override
+    String getSensorUuid() {
+        return sensorUuid
+    }
+
+    @Override
+    String getSensorName() {
+        return sensorName
+    }
+
+    @Override
+    Double getAverageTemperature() {
+        return averageTemperature
     }
 }
