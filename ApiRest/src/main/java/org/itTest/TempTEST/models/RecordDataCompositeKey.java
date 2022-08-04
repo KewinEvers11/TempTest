@@ -54,4 +54,9 @@ public class RecordDataCompositeKey implements Serializable {
     public int hashCode() {
         return Objects.hash(timestamp, sensor);
     }
+
+    @Override
+    public String toString() {
+        return String.format("[timestamp: %s, sensor: %s]", timestamp, sensor.getUuid());
+    }
 }
