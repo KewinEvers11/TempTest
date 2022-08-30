@@ -48,7 +48,7 @@ public class SensorServiceImpl implements SensorService {
     public SensorResponse updateSensorByUuid(String uuid, SensorRequest sensorRequest) {
         // Check sensor exist
         Sensor sensor = sensorRepository.findById(uuid)
-                .orElseThrow(() -> new SensorIsNotRegistered(String.format(CODE_4050, uuid),uuid));
+                .orElseThrow(() -> new SensorIsNotRegistered(uuid));
         // Check place exist
         Place place = placeRepository.findById(sensorRequest.getPlaceUuid())
                 .orElseThrow(() -> new PlaceNotRegistered(sensorRequest.getPlaceUuid()));
@@ -63,7 +63,7 @@ public class SensorServiceImpl implements SensorService {
     @Override
     public SensorResponse findSensorByUUID(String uuid) {
         Sensor sensor = sensorRepository.findById(uuid)
-                .orElseThrow(() -> new NotFoundException(String.format(CODE_4004, "Sensor", uuid)));
+                .orElseThrow(() -> new NotFoundException("Sensor", uuid));
         SensorResponse response = sensorMapper.sensorToSensorResponse(sensor);
         response.set_links(urlUtils.getLinksForSensorResponse(sensor));
         return response;
