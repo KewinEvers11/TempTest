@@ -54,7 +54,7 @@ public class PlaceServiceImpl implements PlaceService{
     @Override
     public PlaceResponse findPlaceByUuid(String uuid) throws NotFoundException {
         Place placeFound = placeRepository.findById(uuid)
-                .orElseThrow(() -> new NotFoundException(String.format(CODE_4004, "Place", uuid)));
+                .orElseThrow(() -> new NotFoundException("Place", uuid));
         return placeMapper.placeToPlaceResponse(placeFound);
     }
 
@@ -62,7 +62,7 @@ public class PlaceServiceImpl implements PlaceService{
     @Transactional
     public PlaceResponse updatePlace(String uuid, PlaceRequest placeRequest) {
         Place placeFound= placeRepository.findById(uuid)
-                .orElseThrow(() -> new NotFoundException(String.format(CODE_4004, "Place", uuid)));
+                .orElseThrow(() -> new NotFoundException("Place", uuid));
         placeFound.setName(placeRequest.getName());
         return placeMapper.placeToPlaceResponse(placeRepository.save(placeFound));
     }
@@ -76,7 +76,7 @@ public class PlaceServiceImpl implements PlaceService{
     @Transactional
     public PlaceResponse addSensor(String uuid, SensorRequest sensorRequest){
         Place place = placeRepository.findById(uuid)
-                .orElseThrow(() -> new NotFoundException(String.format(CODE_4004, "Place", uuid)));
+                .orElseThrow(() -> new NotFoundException("Place", uuid));
 
         Sensor newSensor = sensorMapper.sensorRequestToSensor(sensorRequest);
         newSensor.setPlace(place);
@@ -95,7 +95,7 @@ public class PlaceServiceImpl implements PlaceService{
     public AverageTemperaturePerSensorByDateContainerResponse getAverageTemperaturePerSensorByDateAndUuid(String uuid, LocalDate date) {
         // Checks if place exists
         Place foundPlace = placeRepository.findById(uuid)
-                .orElseThrow(() -> new NotFoundException(String.format(CODE_4004, "Place", uuid)));
+                .orElseThrow(() -> new NotFoundException("Place", uuid));
         // Gets the average temperatures
         List<AvgTemperaturePerSensorPojo> data = placeRepository.getAvgTemperaturePerSensor(date, uuid);
 

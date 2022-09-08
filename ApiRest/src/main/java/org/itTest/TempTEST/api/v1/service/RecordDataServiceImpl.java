@@ -38,7 +38,7 @@ public class RecordDataServiceImpl implements RecordDataService{
 
         // check sensor existence
         Sensor sensor = sensorRepository.findById(sensorUuid)
-                .orElseThrow(() -> new SensorIsNotRegistered(CODE_4051, sensorUuid));
+                .orElseThrow(() -> new SensorIsNotRegistered(sensorUuid));
 
         List<RecordData> records = request.getRecords()
                 .stream()
